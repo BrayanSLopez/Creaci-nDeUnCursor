@@ -1,0 +1,31 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GastosUsuario`()
+BEGIN
+	DECLARE fin INT DEFAULT 0;
+    DECLARE usuarioId, conteoGastos INT;
+    DECLARE totalGastos INT;
+    DECLARE nombreUsuario VARCHAR(100);
+    DECLARE cur 
+		CURSOR FOR
+			SELECT Cedula, Nombres 
+            FROM usuario;
+        
+	DECLARE CONTINUE HANDLER 
+		FOR NOT FOUND SET fin = 1;
+    
+    OPEN cur;
+    ReadLoop: LOOP
+		FETCH cur INTO usuarioId, nombreUsuario;
+        IF fin = 1 THEN
+			LEAVE ReadLoop;
+		END IF;
+        
+        SELECT sum(gastos.Monto), count(gastos.idGastos)
+        INTO totalGastos, conteoGastos
+        FROM Presupuesto
+        LEFT JOIN gastos ON presupuesto.idPresupuesto = gastos.idPresupuesto
+        WHERE presupuesto.Cedula = usuarioId;
+        
+        SELECT nombreUsuario AS "Usuario", totalGastos AS "Total Gastos", conteoGastos AS "Numero de Gastos";
+	END LOOP;
+    CLOSE cur;
+END
