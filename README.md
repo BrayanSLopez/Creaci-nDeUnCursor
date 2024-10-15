@@ -15,7 +15,7 @@ Tabla Gastos
 
 ![image](https://github.com/user-attachments/assets/f6b551fb-7f35-4ded-a2e4-7bc28b485a3d)
 
-#Todos los Resultados
+# Todos los Resultados
 
 ![image](https://github.com/user-attachments/assets/af54df79-e100-4afa-bf42-8d3460633740)
 
